@@ -1,91 +1,24 @@
-/*
-Classroom Attendance System
+public class Main {
+	public static void main(String[] args) {
+        Classroom classroom = new Classroom();
 
-Teacher thread:
+        StudentThread s1 = new StudentThread(classroom, "Student 1");
+        StudentThread s2 = new StudentThread(classroom, "Student 2");
+        StudentThread s3 = new StudentThread(classroom, "Student 3");
 
-Takes attendance
+        TeacherThread teacher = new TeacherThread(classroom);
 
-Student thread:
+        s1.start();
+        s2.start();
+        s3.start();
 
-Waits until attendance starts
-Requirements
-Students should not proceed immediately.
-Students must wait.
-Teacher gives signal.
-Students continue after signal.
+        try {
+            Thread.sleep(3000); // Wait for a few seconds
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-Expected Flow:
+        teacher.start();
+    }
+}
 
-Student Waiting...
-
-Teacher Started Attendance
-
-Student Marked Present
-Concepts Tested
-wait()
-notifyAll()
-
-
-Instructions - 
-Create Class Classroom
-
-    Variable:
-        attendanceStarted = false
-
-    synchronized method waitForAttendance()
-
-        While attendanceStarted is false
-
-            Print:
-                "Student Waiting..."
-
-            wait()
-
-        Print:
-            "Student Marked Present"
-
-
-    synchronized method startAttendance()
-
-        attendanceStarted = true
-
-        Print:
-            "Teacher Started Attendance"
-
-        notifyAll()
-
-
-Create Class TeacherThread
-
-    Classroom classroom
-
-    run()
-
-        classroom.startAttendance()
-
-
-Create Class StudentThread
-
-    Classroom classroom
-
-    run()
-
-        classroom.waitForAttendance()
-
-
-Main Method
-
-    Create Classroom object
-
-    Create multiple Student threads
-
-    Create Teacher thread
-
-    Start Student threads
-
-    Wait for a few seconds
-
-    Start Teacher thread
-Thread Coordination
-Synchronization
-*/
